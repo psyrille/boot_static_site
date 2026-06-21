@@ -1,0 +1,1 @@
+# boot_static_site
