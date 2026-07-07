@@ -318,7 +318,7 @@ def generate_page(from_path, template_path, dest_path):
     # html.replace("{{Title}}", title)
     # html.replace("{{Content}}", html)
 
-def generate_html(from_path, template):
+def generate_html(from_path, template, basepath):
     markdown = open(from_path).read()
     html_template = open(template).read()
 
@@ -328,17 +328,19 @@ def generate_html(from_path, template):
     html_template = html_template.replace("{{ Title }}", title)
     html_template = html_template.replace("{{ Content }}", converted_markdown)
 
+    html_template = html_template.replace('href="/', f'href={basepath}')
+    html_template = html_template.replace('src="/', f'src={basepath}')
+
     return html_template
 
-def generate_pages_recursively(dir_path_content, template_path, dest_path):
+def generate_pages_recursively(dir_path_content, template_path, dest_path, basepath):
     # template = open(template_path).read()
 
     if os.path.isfile(dir_path_content):
         print(f"Is file: {dir_path_content}")
-        html = generate_html(dir_path_content, template_path)
+        html = generate_html(dir_path_content, template_path, basepath)
 
         dest_path_lib = pathlib.Path(dest_path)
-        print(dest_path_lib.stem)
 
         dest_path = dest_path.replace(".md", ".html")
 
@@ -356,7 +358,7 @@ def generate_pages_recursively(dir_path_content, template_path, dest_path):
             new_path = os.path.join(dest_path, path.name)
             if not os.path.isfile(path):
                 os.mkdir(os.path.join(dest_path, path.name))
-            generate_pages_recursively(path, template_path, new_path)
+            generate_pages_recursively(path, template_path, new_path, basepath)
 
 
 
