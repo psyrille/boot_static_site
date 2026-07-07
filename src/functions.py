@@ -328,8 +328,8 @@ def generate_html(from_path, template, basepath):
     html_template = html_template.replace("{{ Title }}", title)
     html_template = html_template.replace("{{ Content }}", converted_markdown)
 
-    html_template = html_template.replace('href="/', f'href={basepath}')
-    html_template = html_template.replace('src="/', f'src={basepath}')
+    html_template = html_template.replace('href="/', f'href="{basepath}')
+    html_template = html_template.replace('src="/', f'src="{basepath}')
 
     return html_template
 

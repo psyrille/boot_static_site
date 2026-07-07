@@ -3,7 +3,7 @@ import sys
 
 def main():
     copy_content("static", "docs")
-    basepath = "/" if sys.argv is None else sys.argv 
+    basepath = "/" if len(sys.argv) == 1 else sys.argv[1] 
     generate_pages_recursively("content", "template.html", "docs", basepath)
 
 
